@@ -1,5 +1,4 @@
-{ ... }:
-''
+{...}: ''
   config-notification {
       disable-failed
   }
@@ -28,15 +27,11 @@
       trackpoint {
       }
 
-      focus-follows-mouse
-      warp-mouse-to-focus
   }
 
   layout {
       gaps 9
 
-      center-focused-column "never"
-      always-center-single-column
 
       preset-column-widths {
           proportion 0.5

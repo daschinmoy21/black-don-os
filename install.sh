@@ -278,7 +278,7 @@ cat > "hosts/$hostname/variables.nix" << EOF
   defaultShell = "zsh";   # Options: "fish" or "zsh"
 
   # Theming
-  stylixImage = ../../wallpapers/Valley.jpg;
+  stylixImage = ../../wallpapers/41.png;
   #waybarChoice = ../../modules/home/waybar/waybar-ddubs.nix;  # Waybar temporarily disabled
   animChoice = ../../modules/home/hyprland/animations-end4.nix;
 

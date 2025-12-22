@@ -4,12 +4,10 @@
   lib,
   host,
   ...
-}:
-let
+}: let
   variables = import ../../../hosts/${host}/variables.nix;
   defaultShell = variables.defaultShell or "zsh";
-in
-{
+in {
   imports = [
     ./zshrc-personal.nix
   ];
@@ -56,15 +54,14 @@ in
     initContent = ''
       # Auto-launch Fish if configured as default shell
       ${
-        if defaultShell == "fish" then
-          ''
-            if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]; then
-              shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-              exec fish $LOGIN_OPTION
-            fi
-          ''
-        else
-          ""
+        if defaultShell == "fish"
+        then ''
+          if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]; then
+            shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+            exec fish $LOGIN_OPTION
+          fi
+        ''
+        else ""
       }
 
       bindkey "\eh" backward-word
@@ -78,7 +75,7 @@ in
       # Launch fastfetch on first terminal spawn
       if [[ -z "$FASTFETCH_LAUNCHED" ]]; then
         export FASTFETCH_LAUNCHED=1
-        fastfetch
+        nitch
       fi
     '';
 

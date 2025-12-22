@@ -5,8 +5,8 @@
   };
   home.file."./.config/ghostty/config".text = ''
 
-    #theme = Aura
-    theme = Dracula
+    #theme = Batman
+    theme = Batman
     #theme = Aardvark Blue
     #theme = GruvboxDarkHard
     adjust-cell-height = 10%

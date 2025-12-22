@@ -3,13 +3,13 @@
   lib,
   zen-browser,
   host,
+  antigravity,
   ...
-}:
-{
+}: {
   programs = {
     neovim = {
       enable = false;
-      defaultEditor = false;
+      defaultEditor = true;
     };
     firefox.enable = false; # Firefox is not installed by default
     dconf.enable = true;
@@ -34,29 +34,27 @@
   virtualisation.libvirtd.enable = true;
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
+  nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "zed"
+      "antigravity"
     ];
 
   environment.systemPackages = with pkgs; [
-    amfora # Fancy Terminal Browser For Gemini Protocol
+    ntfs3g #ntfs w/r
     appimage-run # Needed For AppImage Support
-    bottom # btop like util
     brightnessctl # For Screen Brightness Control
     cmatrix # Matrix Movie Effect In Terminal
     cowsay # Great Fun Terminal Program
     docker-compose # Allows Controlling Docker From A Single File
     duf # Utility For Viewing Disk Usage In Terminal
     dysk # disk usage util
-    eza # Beautiful ls Replacement
     ffmpeg # Terminal Video / Audio Editing
     file-roller # Archive Manager
     gdu # graphical disk usage
     gedit # Simple Graphical Text Editor
     gimp # Great Photo Editor
-    glxinfo # Needed for inxi -G GPU info
+    mesa-demos # Needed for inxi -G GPU info
     gping # graphical ping
     tuigreet # The Login Manager (Sometimes Referred To As Display Manager)
     htop # Simple Terminal Based System Monitor
@@ -80,7 +78,6 @@
     onefetch # shows current build info and stats
     pavucontrol # For Editing Audio Levels & Devices
     pciutils # Collection Of Tools For Inspecting PCI Devices
-    picard # For Changing Music Metadata & Getting Cover Art
     pkg-config # Wrapper Script For Allowing Packages To Get Info On Others
     playerctl # Allows Changing Media Volume Through Scripts
     rhythmbox
@@ -103,11 +100,17 @@
     zen-browser # Default browser
     # Development Tools
     zed-editor # Code editor with AI features
+    antigravity #google's IDE
     popsicle
     # AI code editors (cursor, claude-code, gemini-cli) moved to modules/core/ai-code-editors.nix
     gum
     gtk3
     gtk4
     localsend
+    cloudflare-warp
   ];
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  };
 }

@@ -144,6 +144,42 @@
           action = ":MarkdownPreview<CR>";
           desc = "Toggle Markdown Preview";
         }
+        {
+          key = "<C-h>";
+          mode = ["n"];
+          action = "<C-w>h";
+          desc = "Move to left window";
+        }
+        {
+          key = "<C-j>";
+          mode = ["n"];
+          action = "<C-w>j";
+          desc = "Move to lower window";
+        }
+        {
+          key = "<C-k>";
+          mode = ["n"];
+          action = "<C-w>k";
+          desc = "Move to upper window";
+        }
+        {
+          key = "<C-l>";
+          mode = ["n"];
+          action = "<C-w>l";
+          desc = "Move to right window";
+        }
+        {
+          key = "<S-h>";
+          mode = ["n"];
+          action = ":bprev<CR>";
+          desc = "Previous buffer";
+        }
+        {
+          key = "<S-l>";
+          mode = ["n"];
+          action = ":bnext<CR>";
+          desc = "Next buffer";
+        }
       ];
 
       telescope = {
@@ -191,7 +227,7 @@
         nix = {
           enable = true;
           lsp = {
-            server = "nil";
+            servers = ["nil"];
           };
         };
         clang = {
@@ -211,7 +247,7 @@
           lsp = {
             enable = true;
           };
-          format.type = "prettierd";
+          format.type = ["prettierd"];
           extensions.ts-error-translator = {
             enable = true;
           };
@@ -224,14 +260,14 @@
         };
         css = {
           enable = true;
-          format.type = "prettierd";
+          format.type = ["prettierd"];
         };
         typst = {
           enable = true;
         };
         rust = {
           enable = true;
-          crates = {
+          extensions.crates-nvim = {
             enable = true;
           };
         };

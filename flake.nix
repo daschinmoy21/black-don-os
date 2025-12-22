@@ -25,6 +25,10 @@
       url = "github:fpletz/flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    antigravity = {
+      url = "github:jacopone/antigravity-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -48,6 +52,7 @@
             inherit username;
             zen-browser = inputs.zen-browser.packages.${system}.default;
             helium-browser = inputs.helium-browser.packages.${system}.helium-browser;
+            antigravity = inputs.antigravity.packages.${system}.default;
           };
           modules = [
             ./profiles/${profile}
@@ -63,6 +68,12 @@
           hostname = "default";
           profile = "amd";
           username = "user";
+        };
+
+        nixos = mkHost {
+          hostname = "nixos";
+          profile = "nvidia-laptop";
+          username = "crimxnhaze";
         };
 
         nix-tester = mkHost {

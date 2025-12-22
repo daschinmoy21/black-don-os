@@ -4,11 +4,9 @@
   pkgs,
   host,
   ...
-}:
-let
+}: let
   inherit (import ../../hosts/${host}/variables.nix) enableCommunicationApps;
-in
-{
+in {
   config = lib.mkIf enableCommunicationApps {
     environment.systemPackages = with pkgs; [
       teams-for-linux # Video Meetings

@@ -9,6 +9,8 @@
     tumbler.enable = true; # Image/video preview
     gnome.gnome-keyring.enable = true;
     upower.enable = true; # Power management (required for DMS battery monitoring)
+    udisks2.enable = true;
+    cloudflare-warp.enable = true;
 
     smartd = {
       enable =
@@ -22,9 +24,7 @@
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
-      wireplumber.enable = true;  # Enable WirePlumber session manager
+      wireplumber.enable = true; # Enable WirePlumber session manager
     };
   };
-
-
 }
