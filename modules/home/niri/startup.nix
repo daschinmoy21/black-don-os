@@ -12,9 +12,11 @@
     then ''spawn-at-startup "noctalia-shell"''
     else ''// ${barChoice} started via systemd service'';
 in ''
+  spawn-at-startup "dbus-update-activation-environment" "--systemd" "DISPLAY" "WAYLAND_DISPLAY" "XDG_CURRENT_DESKTOP"
+
   spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
   ${barStartupCommand}
-  # spawn-at-startup "bash" "-c" "swww-daemon && sleep 1 && swww img '${stylixImage}'"
+  // spawn-at-startup "bash" "-c" "swww-daemon && sleep 1 && swww img '${stylixImage}'"
   spawn-at-startup "wal" "-R"
   spawn-at-startup "/usr/lib/mate-polkit/polkit-mate-authentication-agent-1"
 ''

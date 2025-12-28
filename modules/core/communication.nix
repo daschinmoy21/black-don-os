@@ -13,6 +13,7 @@ in {
       zoom-us # Video Meetings
       telegram-desktop # Messaging App
       vesktop # Discord Alternative
+      discord
     ];
   };
 }

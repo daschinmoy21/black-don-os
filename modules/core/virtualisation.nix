@@ -2,14 +2,14 @@
   # Only enable either docker or podman -- Not both
   virtualisation = {
     docker = {
-      enable = true;
+      enable = false; # Disabled to save memory - enable when needed
     };
 
     podman.enable = false;
 
     libvirtd = {
       enable = true;
-      onBoot = "start";
+      onBoot = "ignore"; # Start only when needed, not at boot
       onShutdown = "shutdown";
       qemu = {
         runAsRoot = false;

@@ -15,6 +15,7 @@
   window-rule {
       geometry-corner-radius 9
       clip-to-geometry true
+      opacity 0.93
       draw-border-with-background false
   }
 

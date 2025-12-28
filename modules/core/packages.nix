@@ -4,11 +4,12 @@
   zen-browser,
   host,
   antigravity,
+  kortex,
   ...
 }: {
   programs = {
     neovim = {
-      enable = false;
+      enable = true;
       defaultEditor = true;
     };
     firefox.enable = false; # Firefox is not installed by default
@@ -16,7 +17,7 @@
     seahorse.enable = true;
     # Hyprland always enabled - both WMs available at login
     hyprland = {
-      enable = true; # Create desktop file and dependencies
+      enable = false; # Create desktop file and dependencies
       package = pkgs.hyprland;
       portalPackage = pkgs.xdg-desktop-portal-hyprland;
     };
@@ -28,6 +29,7 @@
       enable = true;
       enableSSHSupport = true;
     };
+    niri.enable = true;
   };
 
   # Virtualization support for GNOME Boxes
@@ -107,10 +109,9 @@
     gtk3
     gtk4
     localsend
+    kortex
     cloudflare-warp
+    xdg-desktop-portal-gtk
   ];
-  xdg.portal = {
-    enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-gtk];
-  };
+  # NOTE: xdg.portal config moved to flatpak.nix to avoid conflicts
 }

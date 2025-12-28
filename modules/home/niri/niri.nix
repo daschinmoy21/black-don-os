@@ -69,6 +69,7 @@ in
     wl-clipboard
     swappy
     xdg-desktop-portal-gnome
+    xdg-desktop-portal-gtk
   ];
 
   # Generate Niri config.kdl
@@ -177,84 +178,24 @@ in
     Install.WantedBy = [ "graphical-session.target" ];
   };
 
-  # XDG Desktop Portal services - properly configured for screen sharing
-  systemd.user.services.xdg-desktop-portal = {
-    Unit = {
-      Description = "Portal service";
-      After = [
-        "graphical-session.target"
-        "pipewire.service"
-      ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      Type = "dbus";
-      BusName = "org.freedesktop.portal.Desktop";
-      ExecStart = "${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal";
-      Restart = "on-failure";
-      Environment = [
-        "XDG_CURRENT_DESKTOP=niri"
-        "WAYLAND_DISPLAY=wayland-1"
-      ];
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
-
-  systemd.user.services.xdg-desktop-portal-gnome = {
-    Unit = {
-      Description = "Portal service (GNOME implementation)";
-      After = [
-        "graphical-session.target"
-        "pipewire.service"
-      ];
-      PartOf = [ "graphical-session.target" ];
-      Requires = [ "pipewire.service" ];
-    };
-    Service = {
-      Type = "dbus";
-      BusName = "org.freedesktop.impl.portal.desktop.gnome";
-      ExecStart = "${pkgs.xdg-desktop-portal-gnome}/libexec/xdg-desktop-portal-gnome";
-      Restart = "on-failure";
-      Environment = [
-        "XDG_CURRENT_DESKTOP=niri"
-      ];
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
-
+  # Force xdg-desktop-portal-gtk to start
   systemd.user.services.xdg-desktop-portal-gtk = {
     Unit = {
       Description = "Portal service (GTK/GNOME implementation)";
-      After = [
-        "graphical-session.target"
-      ];
+      After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };
     Service = {
-      Type = "dbus";
-      BusName = "org.freedesktop.impl.portal.desktop.gtk";
       ExecStart = "${pkgs.xdg-desktop-portal-gtk}/libexec/xdg-desktop-portal-gtk";
       Restart = "on-failure";
+      RestartSec = "1s";
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
 
-  # XDG Desktop Portal configuration for Niri
-  xdg.configFile."xdg-desktop-portal/portals.conf".text = ''
-    [preferred]
-    default=gtk
-    org.freedesktop.impl.portal.FileChooser=gtk
-    org.freedesktop.impl.portal.Screenshot=gnome
-    org.freedesktop.impl.portal.ScreenCast=gnome
-  '';
 
-  xdg.configFile."xdg-desktop-portal/niri-portals.conf".text = ''
-    [preferred]
-    default=gtk
-    org.freedesktop.impl.portal.FileChooser=gtk
-    org.freedesktop.impl.portal.Screenshot=gnome
-    org.freedesktop.impl.portal.ScreenCast=gnome
-  '';
+
+
 
   # Place wallpapers in home directory
   home.file = {
@@ -264,5 +205,19 @@ in
     };
     ".face.icon".source = ../hyprland/face.jpg;
     ".config/face.jpg".source = ../hyprland/face.jpg;
+  };
+
+
+
+  # XDG Mime Apps configuration
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = [ "${browser}.desktop" ];
+      "x-scheme-handler/http" = [ "${browser}.desktop" ];
+      "x-scheme-handler/https" = [ "${browser}.desktop" ];
+      "x-scheme-handler/about" = [ "${browser}.desktop" ];
+      "x-scheme-handler/unknown" = [ "${browser}.desktop" ];
+    };
   };
 }

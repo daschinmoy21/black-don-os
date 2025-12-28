@@ -29,97 +29,100 @@
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # Add Kortex
+    kortex = {
+      url = "github:daschinmoy21/Kortex";
+      # Optional: use same nixpkgs (reduces duplication)
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs =
-    { nixpkgs, flake-utils, ... }@inputs:
-    let
-      system = "x86_64-linux";
+  outputs = {
+    nixpkgs,
+    flake-utils,
+    ...
+  } @ inputs: let
+    system = "x86_64-linux";
 
-      # Helper function to create a host configuration
-      mkHost =
-        {
-          hostname,
-          profile,
-          username,
-        }:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = {
-            inherit inputs;
-            host = hostname;
-            inherit profile;
-            inherit username;
-            zen-browser = inputs.zen-browser.packages.${system}.default;
-            helium-browser = inputs.helium-browser.packages.${system}.helium-browser;
-            antigravity = inputs.antigravity.packages.${system}.default;
-          };
-          modules = [
-            ./profiles/${profile}
-          ];
+    # Helper function to create a host configuration
+    mkHost = {
+      hostname,
+      profile,
+      username,
+    }:
+      nixpkgs.lib.nixosSystem {
+        inherit system;
+        specialArgs = {
+          inherit inputs;
+          host = hostname;
+          inherit profile;
+          inherit username;
+          zen-browser = inputs.zen-browser.packages.${system}.default;
+          helium-browser = inputs.helium-browser.packages.${system}.helium-browser;
+          antigravity = inputs.antigravity.packages.${system}.default;
+          kortex = inputs.kortex.packages.${system}.default;
         };
-
-    in
-    {
-      nixosConfigurations = {
-        # Default template configuration
-        # Users will create their own host configurations during installation
-        default = mkHost {
-          hostname = "default";
-          profile = "amd";
-          username = "user";
-        };
-
-        nixos = mkHost {
-          hostname = "nixos";
-          profile = "nvidia-laptop";
-          username = "crimxnhaze";
-        };
-
-        nix-tester = mkHost {
-          hostname = "nix-tester";
-          profile = "intel";
-          username = "don";
-        };
-
-        nix-test = mkHost {
-          hostname = "nix-test";
-          profile = "intel";
-          username = "don";
-        };
+        modules = [
+          ./profiles/${profile}
+        ];
+      };
+  in {
+    nixosConfigurations = {
+      # Default template configuration
+      # Users will create their own host configurations during installation
+      default = mkHost {
+        hostname = "default";
+        profile = "amd";
+        username = "user";
       };
 
-      # Flutter development environment
-      devShells = flake-utils.lib.eachDefaultSystem (
-        system:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            config = {
-              android_sdk.accept_license = true;
-              allowUnfree = true;
-            };
-          };
-          buildToolsVersion = "33.0.2";
-          androidComposition = pkgs.androidenv.composeAndroidPackages {
-            buildToolsVersions = [ buildToolsVersion ];
-            platformVersions = [ "33" ];
-            abiVersions = [ "arm64-v8a" ];
-          };
-          androidSdk = androidComposition.androidsdk;
-        in
-        {
-          default =
-            with pkgs;
-            mkShell rec {
-              ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
-              buildInputs = [
-                flutter
-                androidSdk
-                jdk11
-              ];
-            };
-        }
-      );
+      nixos = mkHost {
+        hostname = "nixos";
+        profile = "nvidia-laptop";
+        username = "crimxnhaze";
+      };
+
+      nix-tester = mkHost {
+        hostname = "nix-tester";
+        profile = "intel";
+        username = "don";
+      };
+
+      nix-test = mkHost {
+        hostname = "nix-test";
+        profile = "intel";
+        username = "don";
+      };
     };
+
+    # Flutter development environment
+    devShells = flake-utils.lib.eachDefaultSystem (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+          config = {
+            android_sdk.accept_license = true;
+            allowUnfree = true;
+          };
+        };
+        buildToolsVersion = "33.0.2";
+        androidComposition = pkgs.androidenv.composeAndroidPackages {
+          buildToolsVersions = [buildToolsVersion];
+          platformVersions = ["33"];
+          abiVersions = ["arm64-v8a"];
+        };
+        androidSdk = androidComposition.androidsdk;
+      in {
+        default = with pkgs;
+          mkShell rec {
+            ANDROID_SDK_ROOT = "${androidSdk}/libexec/android-sdk";
+            buildInputs = [
+              flutter
+              androidSdk
+              jdk11
+            ];
+          };
+      }
+    );
+  };
 }

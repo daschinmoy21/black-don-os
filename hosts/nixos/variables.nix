@@ -16,7 +16,7 @@
 
   # Default Applications
   browser = "zen";
-  terminal = "ghostty";
+  terminal = "kitty";
   keyboardLayout = "us";
   consoleKeyMap = "us";
 
@@ -38,7 +38,7 @@
   syncthingEnable = false; # Syncthing file synchronization
   enableCommunicationApps = true; # Discord, Teams, Zoom, Telegram
   enableExtraBrowsers = true; # Vivaldi, Brave, Firefox, Chromium, Helium
-  enableProductivityApps = false; # Obsidian, GNOME Boxes, QuickEmu
+  enableProductivityApps = true; # Obsidian, GNOME Boxes, QuickEmu
   aiCodeEditorsEnable = true; # Claude-code, gemini-cli, cursor
 
   # Desktop Environment
@@ -52,7 +52,7 @@
   defaultShell = "zsh"; # Options: "fish" or "zsh"
 
   # Theming
-  stylixImage = ../../wallpapers/Mokka-tree.jpg;
+  stylixImage = ../../wallpapers/nix-wallpaper-stripes-logo.png;
   #waybarChoice = ../../modules/home/waybar/waybar-ddubs.nix;  # Waybar temporarily disabled
   animChoice = ../../modules/home/hyprland/animations-end4.nix;
 

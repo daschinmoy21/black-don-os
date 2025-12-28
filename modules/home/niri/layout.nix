@@ -21,7 +21,7 @@
           natural-scroll
       }
       mouse {
-          accel-profile "adaptive"
+          accel-profile "flat"
           accel-speed 1.0
       }
       trackpoint {
