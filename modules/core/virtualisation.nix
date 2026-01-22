@@ -2,7 +2,7 @@
   # Only enable either docker or podman -- Not both
   virtualisation = {
     docker = {
-      enable = false; # Disabled to save memory - enable when needed
+      enable = true; # Disabled to save memory - enable when needed
     };
 
     podman.enable = false;

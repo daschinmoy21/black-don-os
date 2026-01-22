@@ -21,17 +21,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.quickshell.follows = "quickshell";
     };
-    helium-browser = {
-      url = "github:fpletz/flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     antigravity = {
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # Add Kortex
-    kortex = {
-      url = "github:daschinmoy21/Kortex";
+    # Add Logia
+    logia = {
+      url = "github:daschinmoy21/Logia/main";
       # Optional: use same nixpkgs (reduces duplication)
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -58,9 +54,11 @@
           inherit profile;
           inherit username;
           zen-browser = inputs.zen-browser.packages.${system}.default;
-          helium-browser = inputs.helium-browser.packages.${system}.helium-browser;
           antigravity = inputs.antigravity.packages.${system}.default;
-          kortex = inputs.kortex.packages.${system}.default;
+          logia = inputs.logia.packages.${system}.logia {
+            googleClientId = builtins.readFile /home/crimxnhaze/.config/logia-secrets/google-client-id;
+            googleClientSecret = builtins.readFile /home/crimxnhaze/.config/logia-secrets/google-client-secret;
+          };
         };
         modules = [
           ./profiles/${profile}
@@ -120,7 +118,12 @@
               flutter
               androidSdk
               jdk11
+              zsh
             ];
+
+            shellHook = ''
+              $SHELL
+            '';
           };
       }
     );

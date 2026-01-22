@@ -8,9 +8,9 @@ in {
   programs = {
     thunar = {
       enable = thunarEnable;
-      plugins = with pkgs.xfce; [
+      plugins = with pkgs; [
         thunar-archive-plugin
-        thunar-volman
+        thunar-volman # moved to top-level in nixpkgs
       ];
     };
   };

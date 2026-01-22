@@ -62,19 +62,7 @@
           spawn "${dmsPath}" "ipc" "call" "processlist" "toggle";
       }
 
-      // === Audio Controls ===
-      XF86AudioRaiseVolume allow-when-locked=true {
-          spawn "${dmsPath}" "ipc" "call" "audio" "increment" "3";
-      }
-      XF86AudioLowerVolume allow-when-locked=true {
-          spawn "${dmsPath}" "ipc" "call" "audio" "decrement" "3";
-      }
-      XF86AudioMute allow-when-locked=true {
-          spawn "${dmsPath}" "ipc" "call" "audio" "mute";
-      }
-      XF86AudioMicMute allow-when-locked=true {
-          spawn "${dmsPath}" "ipc" "call" "audio" "micmute";
-      }
+
 
       // === Monitor Brightness Controls ===
       XF86MonBrightnessUp allow-when-locked=true {
@@ -100,6 +88,12 @@ in ''
 
       ${noctaliaKeybinds}
       ${dmsKeybinds}
+
+      // === Audio Controls (Wpctl) ===
+      XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+"; }
+      XF86AudioLowerVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-"; }
+      XF86AudioMute        allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; }
+      XF86AudioMicMute     allow-when-locked=true { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
       // === Security ===
       Mod+Shift+Q { quit; }

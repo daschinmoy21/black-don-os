@@ -2,17 +2,17 @@
   config,
   lib,
   pkgs,
-  helium-browser,
   host,
   ...
-}: let
+}:
+let
   inherit (import ../../hosts/${host}/variables.nix) enableExtraBrowsers;
-in {
+in
+{
   config = lib.mkIf enableExtraBrowsers {
-    environment.systemPackages = with pkgs; [
-      google-chrome # Google Chrome
-      firefox # Mozilla Firefox
-      helium-browser # Helium browser
+    environment.systemPackages = [
+      pkgs.google-chrome # Google Chrome
+      pkgs.firefox # Mozilla Firefox
     ];
   };
 }

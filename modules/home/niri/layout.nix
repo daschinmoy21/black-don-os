@@ -22,7 +22,7 @@
       }
       mouse {
           accel-profile "flat"
-          accel-speed 1.0
+          accel-speed 0.5
       }
       trackpoint {
       }

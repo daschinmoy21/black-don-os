@@ -3,8 +3,7 @@
   lib,
   zen-browser,
   host,
-  antigravity,
-  kortex,
+  logia,
   ...
 }: {
   programs = {
@@ -68,6 +67,7 @@
     killall # For Killing All Instances Of Programs
     libnotify # For Notifications
     lm_sensors # Used For Getting Hardware Temps
+    wl-clipboard # Clipboard manager (needed for Neovim/Helix/Emacs)
     lolcat # Add Colors To Your Terminal Command Output
     lshw # Detailed Hardware Information
     mpv # Incredible Video Player
@@ -98,7 +98,7 @@
     nwg-drawer # drawer GUI
     nwg-look # Look GUI
     rofi-emoji # rofi-emoji-wayland merged into rofi-emoji in nixpkgs-unstable
-    youtube-music
+    
     zen-browser # Default browser
     # Development Tools
     zed-editor # Code editor with AI features
@@ -109,9 +109,11 @@
     gtk3
     gtk4
     localsend
-    kortex
+    logia
     cloudflare-warp
     xdg-desktop-portal-gtk
+
+    libreoffice-fresh
   ];
   # NOTE: xdg.portal config moved to flatpak.nix to avoid conflicts
 }

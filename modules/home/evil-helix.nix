@@ -1,8 +1,6 @@
-{ pkgs, ... }:
-let
+{pkgs, ...}: let
   enableEvilHelix = true; # Set to true to enable the configuration
-in
-{
+in {
   home.packages = with pkgs; (
     if enableEvilHelix
     then [
@@ -24,35 +22,69 @@ in
       docker-compose
       docker-language-server
       typescript-language-server
+      rust-analyzer
+      astro-language-server
+      protobuf-language-server
+      protols
+      gopls
+      buf
     ]
-    else [ ]
+    else []
   );
 
   home.file.".config/helix/languages.toml".text =
     if enableEvilHelix
     then ''
-      [language-server.nil]
-      command = "nil"
+            [language-server.nil]
+            command = "nil"
 
-      [language-server.lua]
-      command = "lua-language-server"
+            [language-server.lua]
+            command = "lua-language-server"
 
-      [language-server.json]
-      command = "vscode-json-languageserver"
+            [language-server.json]
+            command = "vscode-json-languageserver"
 
-      [language-server.markdown]
-      command = "marksman"
+            [language-server.markdown]
+            command = "marksman"
+
+            [language-server.gopls]
+            command = "gopls"
+
+            [language-server.protols]
+            command = "protols"
+
+            [[language]]
+            name = "go"
+            auto-format = true
+            language-servers = [ "gopls" ]
+
+            [[language]]
+            name = "protobuf"
+            auto-format = true
+            language-servers = [ "protols" ]
+
+            [language-server.rust-analyzer]
+             command = "rust-analyzer"
+
+      [language-server.rust-analyzer.config]
+      check.command = "clippy"
+
+      [[language]]
+      name = "rust"
+      auto-format = true
+      language-servers = [ "rust-analyzer" ]
     ''
     else "";
 
   home.file.".config/helix/config.toml".text =
     if enableEvilHelix
     then ''
-      theme = "catppuccin_mocha"
+      theme = "autumn"
       #theme = "ao"
 
       [editor]
       evil = true
+      bufferline = "multiple"
       end-of-line-diagnostics = "hint"
       auto-pairs = true
       mouse = true
@@ -66,6 +98,14 @@ in
       popup-border = "all"
       clipboard-provider = "wayland"
       indent-heuristic = "hybrid"
+
+      [editor.cursor-shape]
+      insert = "bar"
+
+      [keys.normal]
+      esc = ["collapse_selection", "keep_primary_selection"]
+
+
 
       [editor.statusline]
       left = ["mode", "spinner"]

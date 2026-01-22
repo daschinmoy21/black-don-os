@@ -18,7 +18,8 @@ in {
       # AI-powered code editors and development tools
       # code-cursor # AI IDE (currently commented out - uncomment if needed)
       claude-code # Claude AI native development environment
-      gemini-cli # Google Gemini CLI tool for terminal AI assistance
+      #gemini-cli # TEMPORARILY DISABLED - npm cache build failure in nixpkgs-unstable
+      opencode
     ];
   };
 }

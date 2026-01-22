@@ -35,6 +35,9 @@ in
     ./fastfetch
     ./fzf.nix
     ./gh.nix
+    ./evil-helix.nix
+    ./editors/doom-emacs.nix
+    ./editors/doom-emacs-install.nix
     ./ghostty.nix
     ./git.nix
     ./gtk.nix

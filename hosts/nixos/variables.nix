@@ -52,7 +52,7 @@
   defaultShell = "zsh"; # Options: "fish" or "zsh"
 
   # Theming
-  stylixImage = ../../wallpapers/nix-wallpaper-stripes-logo.png;
+  stylixImage = ../../wallpapers/mountainscapedark.jpg;
   #waybarChoice = ../../modules/home/waybar/waybar-ddubs.nix;  # Waybar temporarily disabled
   animChoice = ../../modules/home/hyprland/animations-end4.nix;
 
