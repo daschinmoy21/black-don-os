@@ -26,11 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     # Add Logia
-    logia = {
-      url = "github:daschinmoy21/Logia/main";
-      # Optional: use same nixpkgs (reduces duplication)
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
   };
 
   outputs = {
@@ -55,10 +51,6 @@
           inherit username;
           zen-browser = inputs.zen-browser.packages.${system}.default;
           antigravity = inputs.antigravity.packages.${system}.default;
-          logia = inputs.logia.packages.${system}.logia {
-            googleClientId = builtins.readFile /home/crimxnhaze/.config/logia-secrets/google-client-id;
-            googleClientSecret = builtins.readFile /home/crimxnhaze/.config/logia-secrets/google-client-secret;
-          };
         };
         modules = [
           ./profiles/${profile}
