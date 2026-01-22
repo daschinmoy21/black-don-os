@@ -109,7 +109,6 @@
     gtk3
     gtk4
     localsend
-    logia
     cloudflare-warp
     xdg-desktop-portal-gtk
 
